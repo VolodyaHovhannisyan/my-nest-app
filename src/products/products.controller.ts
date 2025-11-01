@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Param, Delete, Patch, ParseIntPipe, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { CreateProductDto } from './dto/create-product.dto';
+import { CreateProductDto, UpdateProductDto } from './dto/create-product.dto';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   create(@Body() dto: CreateProductDto) {
@@ -12,7 +12,7 @@ export class ProductsController {
   }
 
   @Get()
-  findAll(@Query('skip') skip?: number,@Query('take') take?: number,) {
+  findAll(@Query('skip') skip?: number, @Query('take') take?: number,) {
     return this.productsService.findAll(skip, take);
   }
 
@@ -22,7 +22,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: Partial<CreateProductDto>) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateProductDto) {
     return this.productsService.update(id, dto);
   }
 
