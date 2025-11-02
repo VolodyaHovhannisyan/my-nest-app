@@ -27,5 +27,6 @@ model Product {
   id        Int      @id @default(autoincrement())
   name      String
   price     Float
+  imageUrl  String? // 👈 Add this line (optional field)
   createdAt DateTime @default(now())
 }

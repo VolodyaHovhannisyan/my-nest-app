@@ -10,6 +10,12 @@ export class CreateProductDto {
   @IsNumber({}, { message: 'Price must be a valid number' })
   @Min(0, { message: 'Price must be non-negative' })
   price: number;
+  
+  @Type(() => String)
+  @IsString({message:'Image url must be string'})
+  @IsOptional()
+  imageUrl: string;
+
 }
 
 export class UpdateProductDto {
