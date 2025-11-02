@@ -1,0 +1,27 @@
+# Exported from Render on 2025-11-02T16:34:22Z
+version: "1"
+projects:
+- name: My project
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: my-nest-app
+      runtime: node
+      repo: https://github.com/VolodyaHovhannisyan/my-nest-app
+      plan: free
+      envVars:
+      - key: PORT
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      region: oregon
+      buildCommand: npm install --production=false && npx prisma generate && npx prisma
+        migrate && deploy npm run build
+      startCommand: npm run start:prod
+      autoDeployTrigger: commit
+      rootDir: ./deployment
