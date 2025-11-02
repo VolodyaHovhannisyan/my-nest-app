@@ -30,7 +30,7 @@ export class ProductsController {
     })
   )
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return { imageUrl: `http://${process.env.APP_URL}/uploads/${file.filename}` };
+    return { imageUrl: `${process.env.APP_URL}/uploads/${file.filename}` };
   }
 
   @Get()
