@@ -7,18 +7,18 @@ import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const port = process.env.PORT || 3000;
 
   app.enableCors();
+
   // app.useStaticAssets(join(__dirname, "..", "uploads"), {
   //   prefix: "/uploads/",
   // });
   // 👇 Use process.cwd() to serve from project root
+
   app.useStaticAssets(join(process.cwd(), "uploads"), {
     prefix: "/uploads/",
   });
-  console.log(process.cwd());
-  
-
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
@@ -31,7 +31,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(port, () => {
+    console.log(`Server running on ${process.env.APP_URL}`);
+    console.log(process.cwd());
+  });
 }
 
 bootstrap();
