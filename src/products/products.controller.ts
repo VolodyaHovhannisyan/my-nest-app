@@ -34,8 +34,17 @@ export class ProductsController {
   }
 
   @Get()
-  findAll(@Query('skip') skip?: number, @Query('take') take?: number,) {
-    return this.productsService.findAll(skip, take);
+  findAll(
+    // @Query('skip') skip?: number,
+    // @Query('take') take?: number,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = ''
+  ) {
+    const pageNumber = parseInt(page);
+    const pageSize = parseInt(limit);
+
+  return this.productsService.findAll({ pageNumber, pageSize, search });
   }
 
   @Get(':id')
