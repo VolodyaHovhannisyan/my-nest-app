@@ -9,7 +9,16 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT || 3000;
 
-  app.enableCors();
+  app.enableCors({
+    origin:[
+      'http://localhost:5173', // your frontend dev origin
+      'https://my-nest-app-production-cdd3.up.railway.app', // production domain 
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+
+  });
 
   // app.useStaticAssets(join(__dirname, "..", "uploads"), {
   //   prefix: "/uploads/",
